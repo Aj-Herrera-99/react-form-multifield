@@ -1,21 +1,16 @@
-/**
-
- * todo: Aggiungere più campi al form (ad es. lo stato di un articolo - draft, published - o l’autore)
- 
-*/
-
-// * FORM => AL SUBMIT MI CREA UNA CARD
-
-//  header
-//  main => section : form
-//  => section: cardWrapper
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const initialData = {
     title: "",
     author: "",
     status: false,
+    category: "",
 };
+
+// select
+const categories = ["web development", "front-end", "css"];
+// checkbox
+const tags = ["html", "css"];
 
 function App() {
     // states
@@ -30,30 +25,30 @@ function App() {
         setFormData(initialData);
     };
 
-    const handleTitleChange = (e) => {
-        setFormData({ ...formData, title: e.target.value });
-    };
-    const handleAuthorChange = (e) => {
-        setFormData({ ...formData, author: e.target.value });
-    };
-    const handleStatusChange = (e) => {
-        setFormData({ ...formData, status: e.target.checked });
-    };
-
     const handleInputChange = (e) => {
-        console.log(e.target);
+        // console.log(e.target);
         const { type, name, value, checked } = e.target;
         const KEY = name;
         const VAL = type == "checkbox" ? checked : value;
         setFormData({ ...formData, [KEY]: VAL });
     };
 
+    const handleSelectChange = (e) => {
+        console.log(e.target.value.name);
+        console.log(e.target.value.value);
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
     const handleRemoveClick = (e) => {
-        console.log(e.target.closest("li"));
+        // console.log(e.target.closest("li"));
         const cardId = e.target.closest("li").id;
         const nuoveCards = cards.filter((card, index) => index != cardId);
         setCards(nuoveCards);
     };
+
+    useEffect(() => {
+        console.log(formData);
+    }, [formData]);
 
     return (
         <>
@@ -72,6 +67,7 @@ function App() {
                         onSubmit={handleSubmit}
                         className="flex flex-col gap-4"
                     >
+                        {/* Input */}
                         <input
                             type="text"
                             name="title"
@@ -88,6 +84,18 @@ function App() {
                             value={formData.author}
                             placeholder="Autore"
                         />
+                        {/* / select const category = ["web development",
+                        "front-end", "css"]; */}
+                        {/* Select */}
+                        <select name="category" onChange={handleSelectChange}>
+                          <option value="">Select Category</option>
+                            {categories.map((category, index) => (
+                                <option key={index} value={category}>
+                                    {category}
+                                </option>
+                            ))}
+                        </select>
+
                         <label htmlFor="status">Articolo pubblicato?</label>
                         <input
                             type="checkbox"
@@ -105,14 +113,16 @@ function App() {
                 <section className="">
                     <ul className="flex flex-wrap gap-2 my-3">
                         {cards.map((card, index) => (
-                            <li
+                          <li
                                 className="p-4 bg-blue-300"
                                 key={index}
                                 id={index}
                             >
+                              {console.log(card.category)}
                                 <div className="flex flex-col">
                                     <span>Titolo: {card.title}</span>
                                     <span>Author: {card.author}</span>
+                                    <span>Category: {card.category}</span>
                                     <span>
                                         Status:{" "}
                                         {card.status ? "Pubblicato" : "Bozza"}
