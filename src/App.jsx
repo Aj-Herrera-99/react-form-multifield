@@ -5,12 +5,24 @@ const initialData = {
     author: "",
     status: false,
     category: "",
+    tags: [],
 };
 
 // select
 const categories = ["web development", "front-end", "css"];
 // checkbox
-const tags = ["html", "css"];
+const tags = [
+    "javascript",
+    "html",
+    "css",
+    "python",
+    "java",
+    "c++",
+    "php",
+    "ruby",
+    "sql",
+    "xml",
+];
 
 function App() {
     // states
@@ -30,17 +42,21 @@ function App() {
         const { type, name, value, checked } = e.target;
         const KEY = name;
         const VAL = type == "checkbox" ? checked : value;
-        setFormData({ ...formData, [KEY]: VAL });
+        if (name == "tags") {
+            setFormData({
+                ...formData,
+                [name]: [...formData.tags, value],
+            });
+        } else {
+            setFormData({ ...formData, [KEY]: VAL });
+        }
     };
 
-    const handleSelectChange = (e) => {
-        console.log(e.target.value.name);
-        console.log(e.target.value.value);
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+    const handleCheckboxChange = (e) => {
+        console.log(e.target);
     };
 
     const handleRemoveClick = (e) => {
-        // console.log(e.target.closest("li"));
         const cardId = e.target.closest("li").id;
         const nuoveCards = cards.filter((card, index) => index != cardId);
         setCards(nuoveCards);
@@ -59,9 +75,9 @@ function App() {
                 </h1>
             </header>
             {/* Main */}
-            <main>
+            <main className="flex flex-wrap">
                 {/* Form */}
-                <section className="bg-green-300">
+                <section className="w-1/5 p-4 bg-green-300">
                     <form
                         action="#"
                         onSubmit={handleSubmit}
@@ -75,6 +91,7 @@ function App() {
                             onChange={handleInputChange}
                             value={formData.title}
                             placeholder="Titolo"
+                            required
                         />
                         <input
                             type="text"
@@ -83,46 +100,67 @@ function App() {
                             onChange={handleInputChange}
                             value={formData.author}
                             placeholder="Autore"
+                            required
                         />
-                        {/* / select const category = ["web development",
-                        "front-end", "css"]; */}
-                        {/* Select */}
-                        <select name="category" onChange={handleSelectChange}>
-                          <option value="">Select Category</option>
+                        {/* SelectCategory */}
+                        <select
+                            name="category"
+                            onChange={handleInputChange}
+                            required
+                        >
+                            <option value="">Select Category</option>
                             {categories.map((category, index) => (
                                 <option key={index} value={category}>
                                     {category}
                                 </option>
                             ))}
                         </select>
+                        {tags.map((tag, index) => (
+                            <div key={index} className="flex gap-2">
+                                <label htmlFor={tag}>{tag}</label>
+                                <input
+                                    name="tags"
+                                    type="checkbox"
+                                    value={tag}
+                                    onChange={handleInputChange}
+                                />
+                            </div>
+                        ))}
 
-                        <label htmlFor="status">Articolo pubblicato?</label>
-                        <input
-                            type="checkbox"
-                            name="status"
-                            className="p-4 border border-blue-300"
-                            onChange={handleInputChange}
-                            checked={formData.status}
-                        />
+                        <div className="flex gap-2">
+                            <label htmlFor="status">Articolo pubblicato?</label>
+                            <input
+                                type="checkbox"
+                                name="status"
+                                className="p-4 border border-blue-300"
+                                onChange={handleInputChange}
+                                checked={formData.status}
+                            />
+                        </div>
                         <button type="submit" className="px-4 bg-blue-300 y-2">
                             Invia
                         </button>
                     </form>
                 </section>
                 {/* CardWrapper */}
-                <section className="">
-                    <ul className="flex flex-wrap gap-2 my-3">
+                <section className="w-4/5 p-4">
+                    <ul className="flex flex-wrap gap-2">
                         {cards.map((card, index) => (
-                          <li
+                            <li
                                 className="p-4 bg-blue-300"
                                 key={index}
                                 id={index}
                             >
-                              {console.log(card.category)}
                                 <div className="flex flex-col">
                                     <span>Titolo: {card.title}</span>
                                     <span>Author: {card.author}</span>
                                     <span>Category: {card.category}</span>
+                                    <div>
+                                        Tags:
+                                        {card.tags.map((tag, index) => (
+                                            <div key={index}>{tag}</div>
+                                        ))}
+                                    </div>
                                     <span>
                                         Status:{" "}
                                         {card.status ? "Pubblicato" : "Bozza"}
