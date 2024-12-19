@@ -5,7 +5,7 @@ function Badge({ tag }) {
             case "javascript":
                 return "bg-yellow-500";
             case "html":
-                return "bg-orange-500";
+                return "bg-orange-600";
             case "css":
                 return "bg-sky-400";
             case "python":
@@ -19,9 +19,11 @@ function Badge({ tag }) {
             case "ruby":
                 return "bg-red-500";
             case "sql":
-                return "bg-cyan-700";
+                return "bg-cyan-500";
+            case "xml":
+                return "bg-orange-500";
             default:
-                return "bg-stone-700"
+                return "bg-stone-600"
         }
     };
 

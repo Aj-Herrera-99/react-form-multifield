@@ -10,9 +10,17 @@ function Main({
     handleRemoveClick,
 }) {
     return (
-        <main className="flex flex-wrap overflow-hidden grow">
+        <main className="flex flex-col sm:flex-row grow bg-stone-700 sm:overflow-hidden">
             {/* Form */}
             <section className="w-full p-4 sm:w-1/3 xl:w-1/4 bg-stone-600">
+                <div className="text-white">
+                    <span className="text-2xl font-semibold">
+                        Vuoi aggiungere un nuovo articolo?
+                    </span>{" "}
+                    <span className="text-xl font-bold tracking-widest">
+                        Compila il form!
+                    </span>
+                </div>
                 <Form
                     formData={formData}
                     tagsListChecked={tagsListChecked}
@@ -21,8 +29,8 @@ function Main({
                 />
             </section>
             {/* CardWrapper */}
-            <section className="h-full p-4 overflow-y-scroll sm:w-2/3 xl:w-3/4">
-                <ul className="grid grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <section className="w-full p-4 sm:w-2/3 xl:w-3/4 sm:overflow-y-auto">
+                <ul className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     {cards
                         .filter((card) => card.status)
                         .map((card, index) => (

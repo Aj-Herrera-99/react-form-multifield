@@ -7,7 +7,7 @@ function Form({ formData, tagsListChecked, handleSubmit, handleInputChange }) {
         <form
             action="#"
             onSubmit={handleSubmit}
-            className="flex flex-col gap-4"
+            className="flex flex-col gap-4 my-4"
         >
             <TextField
                 name="title"

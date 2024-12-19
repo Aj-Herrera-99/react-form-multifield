@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Main from "./components/Main";
+import Header from "./components/Header";
 import "./App.css";
 
 const initialData = {
@@ -87,13 +88,7 @@ function App() {
 
     return (
         <>
-            {/* Header */}
-            <header>
-                <h1 className="p-3 text-6xl text-center text-white uppercase bg-stone-800">
-                    React Blog Form Multifield
-                </h1>
-            </header>
-            {/* Main */}
+            <Header />
             <Main
                 formData={formData}
                 cards={cards}
