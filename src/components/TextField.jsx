@@ -7,7 +7,7 @@ function TextField({ name, value, placeholder, handleInputChange }) {
             value={value}
             placeholder={placeholder}
             onChange={handleInputChange}
-            required
+            // required
         />
     );
 }

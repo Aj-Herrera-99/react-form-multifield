@@ -1,7 +1,9 @@
 function CheckboxField({children, index, id, name, value, checked, handleInputChange}) {
     return (
-        <li className="flex justify-between gap-1 p-2 bg-green-100 rounded-md">
-            <label className="grow" htmlFor={id}>{children}</label>
+        <li className="flex justify-between gap-1 p-2 text-white rounded-md bg-stone-900">
+            <label className="grow" htmlFor={id}>
+                {children}
+            </label>
             <input
                 type="checkbox"
                 tagindex={index}

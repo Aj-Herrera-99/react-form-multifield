@@ -1,6 +1,8 @@
+import Badge from "./Badge";
+
 function Card({ index, card, handleRemoveClick }) {
     return (
-        <li className="relative p-4 bg-blue-300" cardindex={index}>
+        <li className="relative p-4 bg-white border rounded-lg border-stone-300" cardindex={index}>
             <div className="flex flex-col gap-4">
                 <span>
                     <strong>Title:</strong> {card.title}
@@ -11,12 +13,12 @@ function Card({ index, card, handleRemoveClick }) {
                 <span>
                     <strong>Category:</strong> {card.category}
                 </span>
-                <ul className="list-disc list-inside">
+                <div className="flex flex-wrap gap-2">
                     <strong>Tags:</strong>
                     {card.tags.map((tag, index) => (
-                        <li key={index}>{tag}</li>
+                        <Badge key={index} tag={tag}/>
                     ))}
-                </ul>
+                </div>
                 <span>
                     <strong>Status:</strong>{" "}
                     {card.status ? "Pubblicato" : "Bozza"}
