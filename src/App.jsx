@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Main from "./components/Main";
+import "./App.css"
 
 const initialData = {
     title: "",
@@ -24,6 +25,7 @@ export const tags = [
     "sql",
     "xml",
 ];
+
 
 function App() {
     // states
@@ -76,16 +78,12 @@ function App() {
         setCards(nuoveCards);
     };
 
-    // useEffect(() => {
-    //     console.log(formData);
-    // }, [formData]);
-
     return (
         <>
             {/* Header */}
             <header>
                 <h1 className="p-3 text-6xl text-center uppercase bg-red-300">
-                    sono un titolo
+                    React Blog Form Multifield
                 </h1>
             </header>
             {/* Main */}
@@ -100,6 +98,5 @@ function App() {
         </>
     );
 }
-
 
 export default App;

@@ -40,7 +40,7 @@ function Form({ formData, tagsListChecked, handleSubmit, handleInputChange }) {
                 <h4 className="p-2 text-xl font-semibold bg-green-200 rounded-md">
                     Seleziona i tags
                 </h4>
-                <ul className="grid grid-cols-3 my-2 gap-x-4 gap-y-2">
+                <ul className="grid grid-cols-3 my-2 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-2">
                     {tags.map((tag, index) => (
                         <CheckboxField
                             key={index}
