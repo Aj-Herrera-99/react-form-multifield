@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Main from "./components/Main";
 
 const initialData = {
     title: "",
@@ -9,9 +10,9 @@ const initialData = {
 };
 
 // select
-const categories = ["web development", "front-end", "css"];
+export const categories = ["web development", "front-end", "css"];
 // checkbox
-const tags = [
+export const tags = [
     "javascript",
     "html",
     "css",
@@ -28,6 +29,9 @@ function App() {
     // states
     const [formData, setFormData] = useState(initialData);
     const [cards, setCards] = useState([]);
+    const [tagsListChecked, setTagsListChecked] = useState(
+        tags.map((tag) => false)
+    );
 
     // actions
     const handleSubmit = (e) => {
@@ -35,36 +39,46 @@ function App() {
         e.preventDefault();
         setCards([...cards, formData]);
         setFormData(initialData);
+        setTagsListChecked((curr) => curr.map((el) => false));
     };
 
     const handleInputChange = (e) => {
-        // console.log(e.target);
         const { type, name, value, checked } = e.target;
         const KEY = name;
         const VAL = type == "checkbox" ? checked : value;
-        if (name == "tags") {
+        if (name != "tags") return setFormData({ ...formData, [KEY]: VAL });
+        // * da qui in poi significa che lo scatenante è una checkbox dei tags
+        // ? se il tag è stato selezionato (checked) allora aggiungilo alla lista dei tags
+        if (checked) {
             setFormData({
                 ...formData,
-                [name]: [...formData.tags, value],
+                [KEY]: [...formData.tags, value],
             });
-        } else {
-            setFormData({ ...formData, [KEY]: VAL });
         }
-    };
-
-    const handleCheckboxChange = (e) => {
-        console.log(e.target);
+        // ? se il tag è stato deselezionato (unchecked) allora toglilo dalla lista dei tags
+        else if (!checked) {
+            const newTags = formData.tags.filter((tag) => tag != value);
+            setFormData({ ...formData, [KEY]: newTags });
+        }
+        // ? alla checkbox scatenante dei tags, gli faccio il not del suo valore corrente nell'array booleano
+        const newTagsListChecked = tagsListChecked.map((isChecked, index) => {
+            if (index == e.target.getAttribute("tagindex")) {
+                return !isChecked;
+            }
+            return isChecked;
+        });
+        setTagsListChecked(newTagsListChecked);
     };
 
     const handleRemoveClick = (e) => {
-        const cardId = e.target.closest("li").id;
-        const nuoveCards = cards.filter((card, index) => index != cardId);
+        const cardIndex = e.target.closest("li").getAttribute("cardindex");
+        const nuoveCards = cards.filter((card, index) => index != cardIndex);
         setCards(nuoveCards);
     };
 
-    useEffect(() => {
-        console.log(formData);
-    }, [formData]);
+    // useEffect(() => {
+    //     console.log(formData);
+    // }, [formData]);
 
     return (
         <>
@@ -75,110 +89,17 @@ function App() {
                 </h1>
             </header>
             {/* Main */}
-            <main className="flex flex-wrap">
-                {/* Form */}
-                <section className="w-1/5 p-4 bg-green-300">
-                    <form
-                        action="#"
-                        onSubmit={handleSubmit}
-                        className="flex flex-col gap-4"
-                    >
-                        {/* Input */}
-                        <input
-                            type="text"
-                            name="title"
-                            className="p-4 border border-blue-300"
-                            onChange={handleInputChange}
-                            value={formData.title}
-                            placeholder="Titolo"
-                            required
-                        />
-                        <input
-                            type="text"
-                            name="author"
-                            className="p-4 border border-blue-300"
-                            onChange={handleInputChange}
-                            value={formData.author}
-                            placeholder="Autore"
-                            required
-                        />
-                        {/* SelectCategory */}
-                        <select
-                            name="category"
-                            onChange={handleInputChange}
-                            required
-                        >
-                            <option value="">Select Category</option>
-                            {categories.map((category, index) => (
-                                <option key={index} value={category}>
-                                    {category}
-                                </option>
-                            ))}
-                        </select>
-                        {tags.map((tag, index) => (
-                            <div key={index} className="flex gap-2">
-                                <label htmlFor={tag}>{tag}</label>
-                                <input
-                                    name="tags"
-                                    type="checkbox"
-                                    value={tag}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                        ))}
-
-                        <div className="flex gap-2">
-                            <label htmlFor="status">Articolo pubblicato?</label>
-                            <input
-                                type="checkbox"
-                                name="status"
-                                className="p-4 border border-blue-300"
-                                onChange={handleInputChange}
-                                checked={formData.status}
-                            />
-                        </div>
-                        <button type="submit" className="px-4 bg-blue-300 y-2">
-                            Invia
-                        </button>
-                    </form>
-                </section>
-                {/* CardWrapper */}
-                <section className="w-4/5 p-4">
-                    <ul className="flex flex-wrap gap-2">
-                        {cards.map((card, index) => (
-                            <li
-                                className="p-4 bg-blue-300"
-                                key={index}
-                                id={index}
-                            >
-                                <div className="flex flex-col">
-                                    <span>Titolo: {card.title}</span>
-                                    <span>Author: {card.author}</span>
-                                    <span>Category: {card.category}</span>
-                                    <div>
-                                        Tags:
-                                        {card.tags.map((tag, index) => (
-                                            <div key={index}>{tag}</div>
-                                        ))}
-                                    </div>
-                                    <span>
-                                        Status:{" "}
-                                        {card.status ? "Pubblicato" : "Bozza"}
-                                    </span>
-                                    <span
-                                        onClick={handleRemoveClick}
-                                        className="text-red-500 cursor-pointer hover:scale-105"
-                                    >
-                                        x
-                                    </span>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
-                </section>
-            </main>
+            <Main
+                formData={formData}
+                cards={cards}
+                tagsListChecked={tagsListChecked}
+                handleSubmit={handleSubmit}
+                handleInputChange={handleInputChange}
+                handleRemoveClick={handleRemoveClick}
+            />
         </>
     );
 }
+
 
 export default App;
