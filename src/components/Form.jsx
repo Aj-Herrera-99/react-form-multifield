@@ -1,6 +1,7 @@
-import { categories, tags } from "../App";
 import TextField from "./TextField";
 import CheckboxField from "./CheckboxField";
+
+import { categories, tags } from "../App";    // ! ULTERIORE SEMPLIFICAZIONE: import/export diretto (non avevo voglia di passarli come props)
 
 function Form({ formData, tagsListChecked, handleSubmit, handleInputChange }) {
     return (
@@ -21,7 +22,7 @@ function Form({ formData, tagsListChecked, handleSubmit, handleInputChange }) {
                 placeholder="Inserisci autore"
                 handleInputChange={handleInputChange}
             />
-            {/* SelectCategory */}
+            {/*  SelectCategory */}
             <select
                 className="p-2 rounded-md"
                 name="category"
@@ -37,6 +38,8 @@ function Form({ formData, tagsListChecked, handleSubmit, handleInputChange }) {
                     </option>
                 ))}
             </select>
+
+            {/* CHECKBOX DEI TAGS */}
             <div className="p-3 text-white rounded-lg bg-stone-800">
                 <h4 className="p-2 text-xl font-semibold rounded-md">
                     Seleziona i tags
