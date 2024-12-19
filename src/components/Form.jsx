@@ -29,7 +29,8 @@ function Form({ formData, tagsListChecked, handleSubmit, handleInputChange }) {
                 value={formData.category}
                 required
             >
-                <option value="">Seleziona categoria</option>
+                {/* questa prima option ha solo valore di placeholder */}
+                <option value="">Seleziona categoria</option> 
                 {categories.map((category, index) => (
                     <option key={index} value={category}>
                         {category}
@@ -63,7 +64,7 @@ function Form({ formData, tagsListChecked, handleSubmit, handleInputChange }) {
                 checked={formData.status}
                 handleInputChange={handleInputChange}
             >
-                Articolo pubblicato?
+                Vuoi pubblicare l'articolo?
             </CheckboxField>
 
             <button type="submit" className="px-4 py-4 text-lg font-bold tracking-widest text-white uppercase rounded-full white bg-stone-900 y-2 hover:bg-stone-950">

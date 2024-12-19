@@ -22,8 +22,8 @@ function Card({ index, card, handleRemoveClick }) {
                         <Badge key={index} tag={tag} />
                     ))}
                 </div>
-                <span>
-                    <strong>Status:</strong> Pubblicato
+                <span>  
+                    <strong>Status:</strong> Pubblicato 
                 </span>
                 <i
                     onClick={handleRemoveClick}

@@ -1,5 +1,6 @@
 function Badge({ tag }) {
     // classes
+    // poi trovero un modo per generare colori dinamicamente
     const bgColor = (tag) => {
         switch (tag) {
             case "javascript":
