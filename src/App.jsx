@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Main from "./components/Main";
-import "./App.css"
+import "./App.css";
 
 const initialData = {
     title: "",
@@ -26,7 +26,6 @@ export const tags = [
     "xml",
 ];
 
-
 function App() {
     // states
     const [formData, setFormData] = useState(initialData);
@@ -37,7 +36,6 @@ function App() {
 
     // actions
     const handleSubmit = (e) => {
-        console.log("test");
         e.preventDefault();
         setCards([...cards, formData]);
         setFormData(initialData);
@@ -77,6 +75,15 @@ function App() {
         const nuoveCards = cards.filter((card, index) => index != cardIndex);
         setCards(nuoveCards);
     };
+
+    // side effects
+    useEffect(() => {
+        if (cards.length) {
+            if (cards[cards.length - 1].status) {
+                alert("ARTICOLO PUBBLICATO");
+            }
+        }
+    }, [cards]);
 
     return (
         <>

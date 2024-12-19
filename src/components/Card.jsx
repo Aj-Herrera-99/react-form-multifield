@@ -21,7 +21,7 @@ function Card({ index, card, handleRemoveClick }) {
                 </div>
                 <span>
                     <strong>Status:</strong>{" "}
-                    {card.status ? "Pubblicato" : "Bozza"}
+                    Pubblicato
                 </span>
                 <i
                     onClick={handleRemoveClick}

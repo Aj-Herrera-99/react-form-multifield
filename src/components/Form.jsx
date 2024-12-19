@@ -27,7 +27,7 @@ function Form({ formData, tagsListChecked, handleSubmit, handleInputChange }) {
                 name="category"
                 onChange={handleInputChange}
                 value={formData.category}
-                // required
+                required
             >
                 <option value="">Seleziona categoria</option>
                 {categories.map((category, index) => (

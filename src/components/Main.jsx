@@ -9,7 +9,6 @@ function Main({
     handleInputChange,
     handleRemoveClick,
 }) {
-    
     return (
         <main className="flex flex-wrap overflow-hidden grow">
             {/* Form */}
@@ -24,16 +23,21 @@ function Main({
             {/* CardWrapper */}
             <section className="h-full p-4 overflow-y-scroll sm:w-2/3 xl:w-3/4">
                 <ul className="grid grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                    {cards.map((card, index) => (
-                        // TODO: prima di mappare, filtrare solo se status e true
-                        <Card key={index} index={index} card={card} handleRemoveClick={handleRemoveClick} />
-                    ))}
+                    {cards
+                        .filter((card) => card.status)
+                        .map((card, index) => (
+                            // TODO: prima di mappare, filtrare solo se status e true
+                            <Card
+                                key={index}
+                                index={index}
+                                card={card}
+                                handleRemoveClick={handleRemoveClick}
+                            />
+                        ))}
                 </ul>
             </section>
         </main>
     );
 }
-
-
 
 export default Main;
